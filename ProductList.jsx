@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../redux/CartSlice';
+import { addItem } from '../redux/CartSlice';
 import './ProductList.css';
 
 // Plant products data organized by categories
@@ -87,7 +87,7 @@ function ProductList() {
 
   // Handle add to cart
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
+    dispatch(addItem(product));
   };
 
   return (
