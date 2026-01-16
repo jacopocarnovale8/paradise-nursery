@@ -8,8 +8,8 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    // Add item to cart
-    addToCart: (state, action) => {
+    // Add item to cart (required: addItem)
+    addItem: (state, action) => {
       const existingItem = state.items.find(item => item.id === action.payload.id);
       
       if (existingItem) {
@@ -24,12 +24,27 @@ const cartSlice = createSlice({
       }
     },
 
-    // Remove item from cart completely
-    removeFromCart: (state, action) => {
+    // Remove item from cart completely (required: removeItem)
+    removeItem: (state, action) => {
       state.items = state.items.filter(item => item.id !== action.payload);
     },
 
-    // Increase item quantity
+    // Update item quantity (required: updateQuantity)
+    updateQuantity: (state, action) => {
+      const { id, quantity } = action.payload;
+      const item = state.items.find(item => item.id === id);
+      
+      if (item) {
+        if (quantity > 0) {
+          item.quantity = quantity;
+        } else {
+          // If quantity is 0 or less, remove the item
+          state.items = state.items.filter(i => i.id !== id);
+        }
+      }
+    },
+
+    // Additional helper functions for convenience
     increaseQuantity: (state, action) => {
       const item = state.items.find(item => item.id === action.payload);
       if (item) {
@@ -37,7 +52,6 @@ const cartSlice = createSlice({
       }
     },
 
-    // Decrease item quantity
     decreaseQuantity: (state, action) => {
       const item = state.items.find(item => item.id === action.payload);
       if (item) {
@@ -58,8 +72,9 @@ const cartSlice = createSlice({
 });
 
 export const { 
-  addToCart, 
-  removeFromCart, 
+  addItem,
+  removeItem,
+  updateQuantity,
   increaseQuantity, 
   decreaseQuantity, 
   clearCart 
