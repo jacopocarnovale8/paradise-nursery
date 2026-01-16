@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { increaseQuantity, decreaseQuantity, removeFromCart } from '../redux/CartSlice';
+import { increaseQuantity, decreaseQuantity, removeItem } from '../redux/CartSlice';
 import './CartItem.css';
 
 function CartItem() {
@@ -34,7 +34,7 @@ function CartItem() {
 
   // Handle remove item
   const handleRemove = (itemId) => {
-    dispatch(removeFromCart(itemId));
+    dispatch(removeItem(itemId));
   };
 
   // Handle continue shopping
